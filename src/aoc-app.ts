@@ -3,19 +3,14 @@ import { customElement, state } from 'lit/decorators.js'
 import * as solutions from './days'
 import { when } from 'lit/directives/when.js'
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement('aoc-app')
 export class AoCApp extends LitElement {
   @state()
   input = ''
 
   @state()
-  day = Object.keys(solutions)[0] as keyof typeof solutions
+  // Typically we're checking the latest puzzle available
+  day = Object.keys(solutions).at(-1) as keyof typeof solutions
 
   @state()
   output = ''
