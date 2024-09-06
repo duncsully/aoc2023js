@@ -1,7 +1,9 @@
-export function day01_1(input: string) {
-  const rows = input.split('\n').filter((row) => row.length > 0)
+import { splitLines } from '../utils'
 
-  const total = rows.reduce((acc, row) => {
+export function day01_1(input: string) {
+  const lines = splitLines(input)
+
+  const total = lines.reduce((acc, row) => {
     const num = getNumber(row)
 
     return acc + num
@@ -10,9 +12,9 @@ export function day01_1(input: string) {
 }
 
 export function day01_2(input: string) {
-  const rows = input.split('\n').filter((row) => row.length > 0)
+  const lines = splitLines(input)
 
-  const total = rows.reduce((acc, row) => {
+  const total = lines.reduce((acc, row) => {
     const num = getNumberIncludingWords(row)
 
     return acc + num
@@ -20,15 +22,15 @@ export function day01_2(input: string) {
   return total
 }
 
-function getNumber(row: string) {
-  const chars = row.split('')
+function getNumber(line: string) {
+  const chars = line.split('')
   const first = chars.find(Number)!
   const last = chars.findLast(Number)!
   return parseInt(first + last, 10)
 }
 
-function getNumberIncludingWords(row: string) {
-  const chars = row.split('')
+function getNumberIncludingWords(line: string) {
+  const chars = line.split('')
   const first = getFirstNumber(chars)
   const last = getLastNumber(chars)
   return parseInt(first + last, 10)

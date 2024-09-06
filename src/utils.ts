@@ -24,3 +24,10 @@ export function workerAsPromise(workerUrl: string | URL, input: string) {
     worker.postMessage(input)
   })
 }
+
+/**
+ * Split a string into an array of lines, removing empty lines
+ */
+export function splitLines(input: string) {
+  return input.split('\n').filter((line) => line.length > 0)
+}
