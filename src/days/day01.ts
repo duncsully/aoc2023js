@@ -1,5 +1,8 @@
 import { splitLines } from '../utils'
 
+/**
+ * A good start. This was fairly elegant to implement in JS.
+ */
 export function day01_1(input: string) {
   const lines = splitLines(input)
 
@@ -11,6 +14,19 @@ export function day01_1(input: string) {
   return total
 }
 
+/**
+ * Oof...OK, this wasn't so bad, still got it right on the first try. I remember coming up with
+ * a solution previously in another language and just had to implement it in JS. I remembered a gotcha
+ * was that a number spelled in words could lie within a string of characters that started off as another
+ * potential number. So if I threw away the entire word candidate when it no longer could be a number,
+ * I'd miss a valid word number. e.g. "fone", "threight", "seveight" start "four", "three", and "seven"
+ * respectively, but switch to "one", "eight", and "eight" respectively. So to keep it general I kept
+ * popping off the first character of the candidate until it was a valid word number again (or empty,
+ * which always is) before proceeding. This could probably be optimized with n-gram models or something.
+ *
+ * It irked me a little to have highly repetitive code in getFirstNumber and getLastNumber, but I ultimately
+ * decided against attempting to generalize the logic.
+ */
 export function day01_2(input: string) {
   const lines = splitLines(input)
 
@@ -22,6 +38,9 @@ export function day01_2(input: string) {
   return total
 }
 
+/**
+ * Given a string, find the first and last digits, combining them to make a two digit number
+ */
 function getNumber(line: string) {
   const chars = line.split('')
   const first = chars.find(Number)!
@@ -29,6 +48,12 @@ function getNumber(line: string) {
   return parseInt(first + last, 10)
 }
 
+/**
+ * Given a string, find the first and last digits either as numerals or as words and combine
+ * them to make a two digit number
+ * @param line
+ * @returns
+ */
 function getNumberIncludingWords(line: string) {
   const chars = line.split('')
   const first = getFirstNumber(chars)
@@ -36,6 +61,9 @@ function getNumberIncludingWords(line: string) {
   return parseInt(first + last, 10)
 }
 
+/**
+ * Parse the first digit either in numeral form or as a word from a character array
+ */
 function getFirstNumber(chars: string[]) {
   let candidate = ''
   for (const char of chars) {
@@ -55,6 +83,11 @@ function getFirstNumber(chars: string[]) {
   throw new Error('No number found')
 }
 
+/**
+ * Parse the last digit either in numeral form or as a word from a character array
+ * @param chars
+ * @returns
+ */
 function getLastNumber(chars: string[]) {
   let candidate = ''
   for (let i = chars.length - 1; i >= 0; i--) {
