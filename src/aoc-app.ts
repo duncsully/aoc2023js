@@ -35,13 +35,15 @@ export class AoCApp extends LitElement {
         <label
           >Puzzle:
           <select
-            .value=${this.day}
             @change=${(e: InputEvent) =>
               (this.day = (e.currentTarget as HTMLSelectElement)
                 .value as keyof typeof solutions)}
           >
             ${Object.keys(solutions).map(
-              (key) => html`<option value=${key}>${key}</option>`
+              (key) =>
+                html`<option value=${key} ?selected=${key === this.day}>
+                  ${key}
+                </option>`
             )}
           </select>
         </label>
@@ -101,7 +103,7 @@ export class AoCApp extends LitElement {
     textarea {
       padding: 0.6em 1.2em;
       font-size: 1em;
-      font-family: inherit;
+      font-family: monospace;
       border-radius: 8px;
       min-height: 10em;
     }
