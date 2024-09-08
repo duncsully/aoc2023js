@@ -6,7 +6,7 @@ import { when } from 'lit/directives/when.js'
 @customElement('aoc-app')
 export class AoCApp extends LitElement {
   @state()
-  input = ''
+  input = sessionStorage.getItem('input') ?? ''
 
   @state()
   // Typically we're checking the latest puzzle available
@@ -51,8 +51,10 @@ export class AoCApp extends LitElement {
           Input:
           <textarea
             .value=${this.input}
-            @input=${(e: InputEvent) =>
-              (this.input = (e.currentTarget as HTMLTextAreaElement).value)}
+            @input=${(e: InputEvent) => {
+              this.input = (e.currentTarget as HTMLTextAreaElement).value
+              sessionStorage.setItem('input', this.input)
+            }}
           ></textarea>
         </label>
         <button type="submit">Run</button>
